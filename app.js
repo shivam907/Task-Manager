@@ -7,7 +7,7 @@ const validator = require("validator");
 
 const app = express();
 const homeRouters = require("./routes/mainRoutes");
-const userRoutes = require("./routes/getUsers");
+const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/getTask");
 
 const User = require("./models/User");
@@ -21,9 +21,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(homeRouters);
 
-app.use(userRoutes.getRoutes);
-app.use(userRoutes.getUserRoutes);
-app.use(userRoutes.postRoutes);
+app.use(userRoutes.createRoutes);
+
+app.use(userRoutes.readRoutes);
+app.use(userRoutes.readRoute);
+
+app.use(userRoutes.updateRoute);
 
 app.use(taskRoutes.getRoutes);
 app.use(taskRoutes.getTaskRoutes);

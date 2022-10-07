@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const mongoose = require("mongoose");
-const postUsers = (req, res, next) => {
+
+const createUsers = (req, res, next) => {
   const user = new User(req.body);
   user.save().then(() => {
     return res.send(user);
@@ -8,12 +9,13 @@ const postUsers = (req, res, next) => {
   //   res.send("Testing bro");
 };
 
-const getUsers = (req, res, next) => {
+const readUsers = (req, res, next) => {
   User.find({}).then((users) => {
     res.send(users);
   });
 };
-const getUserById = (req, res, next) => {
+
+const readUser = (req, res, next) => {
   // const { ObjectId } = require("mongodb");
   const _id = req.params.id;
   console.log(req.params.id);
@@ -29,4 +31,17 @@ const getUserById = (req, res, next) => {
   });
 };
 
-module.exports = { postUsers, getUsers, getUserById };
+const updateUser = (req, res, next) => {
+  const _id = req.params.id;
+  const update = req.body;
+
+  User.findByIdAndUpdate(_id, update, {
+    new: true,
+    runValidators: true,
+  }).then((user) => {
+    console.log(user);
+    return res.send(user);
+  });
+};
+
+module.exports = { createUsers, readUsers, readUser, updateUser };
