@@ -28,6 +28,8 @@ app.use(userRoutes.readRoute);
 
 app.use(userRoutes.updateRoute);
 
+app.use(userRoutes.deleteRoute);
+
 app.use(taskRoutes.getRoutes);
 app.use(taskRoutes.getTaskRoutes);
 app.use(taskRoutes.postRoutes);

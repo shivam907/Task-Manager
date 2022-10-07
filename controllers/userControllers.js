@@ -44,4 +44,11 @@ const updateUser = (req, res, next) => {
   });
 };
 
-module.exports = { createUsers, readUsers, readUser, updateUser };
+const deleteUser = (req, res, next) => {
+  User.findByIdAndDelete(req.params.id).then((user) => {
+    console.log(user);
+    return res.send(user);
+  });
+};
+
+module.exports = { createUsers, readUsers, readUser, updateUser, deleteUser };
