@@ -21,13 +21,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(homeRouters);
 
+//      Create Routes
 app.use(userRoutes.createRoutes);
 
+//      Read Routes
 app.use(userRoutes.readRoutes);
 app.use(userRoutes.readRoute);
 
+//      Update Routes
 app.use(userRoutes.updateRoute);
 
+//      Delete Routes
 app.use(userRoutes.deleteRoute);
 
 app.use(taskRoutes.getRoutes);
@@ -41,6 +45,7 @@ mongoose.connect(
     // useCreateIndex: true,
   }
 );
+
 app.listen(1235);
 
 // const me = new User({
