@@ -33,7 +33,7 @@ const User = mongoose.model("User", {
     minlength: 7,
     validate(value) {
       if (value.includes("password")) {
-        throw new Error("password wrong");
+        throw new Error("wrong password");
       }
     },
   },
