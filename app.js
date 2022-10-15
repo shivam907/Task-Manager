@@ -20,23 +20,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(homeRouters);
-
-//      Create Routes
-app.use(userRoutes.createRoutes);
-
-//      Read Routes
-app.use(userRoutes.readRoutes);
-app.use(userRoutes.readRoute);
-
-//      Update Routes
-app.use(userRoutes.updateRoute);
-
-//      Delete Routes
-app.use(userRoutes.deleteRoute);
-
-app.use(taskRoutes.getRoutes);
-app.use(taskRoutes.getTaskRoutes);
-app.use(taskRoutes.postRoutes);
+for (let i in userRoutes) {
+  app.use(userRoutes[i]);
+}
+// app.use(taskRoutes.getRoutes);
+// app.use(taskRoutes.getTaskRoutes);
+// app.use(taskRoutes.postRoutes);
 // app.listen(1235);
 mongoose.connect(
   "mongodb+srv://shivam:1234@cluster0.ljlrg2q.mongodb.net/?retryWrites=true&w=majority",
