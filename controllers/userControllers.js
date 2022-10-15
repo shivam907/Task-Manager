@@ -31,17 +31,22 @@ const readUser = (req, res, next) => {
   });
 };
 
-const updateUser = (req, res, next) => {
+const updateUser = async (req, res, next) => {
   const _id = req.params.id;
-  const update = req.body;
+  const updates = Object.keys(req.body);
+  const user = await User.findById(req.params.id);
 
-  User.findByIdAndUpdate(_id, update, {
-    new: true,
-    runValidators: true,
-  }).then((user) => {
-    console.log(user);
-    return res.send(user);
-  });
+  updates.forEach((update) => (user[update] = req.body[update]));
+  await user.save();
+
+  res.send(user);
+  // User.findByIdAndUpdate(_id, update, {
+  //   new: true,
+  //   runValidators: true,
+  // }).then((user) => {
+  //   console.log(user);
+  //   return res.send(user);
+  // });
 };
 
 const deleteUser = (req, res, next) => {
