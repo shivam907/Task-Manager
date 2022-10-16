@@ -1,34 +1,24 @@
 const User = require("../models/User");
 const mongoose = require("mongoose");
 
-const createUsers = (req, res, next) => {
+const createUsers = async (req, res, next) => {
   const user = new User(req.body);
-  user.save().then(() => {
-    return res.send(user);
-  });
-  //   res.send("Testing bro");
+  await user.save();
+  return res.send(user);
 };
 
-const readUsers = (req, res, next) => {
-  User.find({}).then((users) => {
-    res.send(users);
-  });
+const readUsers = async (req, res, next) => {
+  const users = await User.find({});
+  res.send(users);
 };
 
-const readUser = (req, res, next) => {
-  // const { ObjectId } = require("mongodb");
+const readUser = async (req, res, next) => {
   const _id = req.params.id;
-  console.log(req.params.id);
-  // var _id = mongoose.mongo.BSONPure.ObjectID.fromHexString(req.params.id);
-  // const _id = mongoose.Types.ObjectId(req.params.id);
-  // const _id = req.params.id;
-  console.log(_id);
-  User.findById(_id).then((users) => {
-    if (!users) {
-      return res.status(404);
-    }
-    res.send(users);
-  });
+  const users = await User.findById(_id);
+  if (!users) {
+    return res.status(404);
+  }
+  res.send(users);
 };
 
 const updateUser = async (req, res, next) => {
@@ -49,11 +39,9 @@ const updateUser = async (req, res, next) => {
   // });
 };
 
-const deleteUser = (req, res, next) => {
-  User.findByIdAndDelete(req.params.id).then((user) => {
-    console.log(user);
-    return res.send(user);
-  });
+const deleteUser = async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+  return res.send(user);
 };
 
 module.exports = { createUsers, readUsers, readUser, updateUser, deleteUser };
