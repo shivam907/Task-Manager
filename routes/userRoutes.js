@@ -12,6 +12,8 @@ const updateRoute = routers.patch("/users/:id", controller.updateUser);
 
 const deleteRoute = routers.delete("/users/:id", controller.deleteUser);
 
+const loginUser = routers.post("/users/login", controller.login);
+
 module.exports = {
   createRoutes,
   readRoutes,

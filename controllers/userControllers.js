@@ -44,4 +44,22 @@ const deleteUser = async (req, res, next) => {
   return res.send(user);
 };
 
-module.exports = { createUsers, readUsers, readUser, updateUser, deleteUser };
+const login = async (req, res, next) => {
+  try {
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    res.send("Logged in");
+  } catch (e) {
+    res.send("error");
+  }
+};
+module.exports = {
+  createUsers,
+  readUsers,
+  readUser,
+  updateUser,
+  deleteUser,
+  login,
+};
