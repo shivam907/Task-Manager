@@ -2,9 +2,14 @@ const User = require("../models/User");
 const mongoose = require("mongoose");
 
 const createUsers = async (req, res, next) => {
-  const user = new User(req.body);
-  await user.save();
-  return res.send(user);
+  try {
+    const user = new User(req.body);
+    await user.save();
+    return res.send(user);
+  } catch (e) {
+    console.log(e);
+    res.send(e.message);
+  }
 };
 
 const readUsers = async (req, res, next) => {
@@ -44,17 +49,30 @@ const deleteUser = async (req, res, next) => {
   return res.send(user);
 };
 
+const deleteAllUsers = async (req, res, next) => {
+  // const user = await User.find({});
+  const del = await User.deleteMany({ name: "shivam" });
+
+  res.send(del);
+};
+
 const login = async (req, res, next) => {
   try {
     const user = await User.findByCredentials(
       req.body.email,
       req.body.password
     );
-    res.send("Logged in");
+
+    // console.log(user.email);
+    // await User.findByCredentials(req.body.email, req.body.password)
+    const token = await user.generateAuthToken();
+    res.send({ user, token });
   } catch (e) {
+    console.log(e);
     res.send("error");
   }
 };
+
 module.exports = {
   createUsers,
   readUsers,
@@ -62,4 +80,5 @@ module.exports = {
   updateUser,
   deleteUser,
   login,
+  deleteAllUsers,
 };

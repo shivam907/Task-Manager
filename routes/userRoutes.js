@@ -14,10 +14,16 @@ const deleteRoute = routers.delete("/users/:id", controller.deleteUser);
 
 const loginUser = routers.post("/users/login", controller.login);
 
+const deleteAllUsers = routers.delete(
+  "/users/delete",
+  controller.deleteAllUsers
+);
+
 module.exports = {
   createRoutes,
   readRoutes,
   readRoute,
   updateRoute,
   deleteRoute,
+  loginUser,
 };
