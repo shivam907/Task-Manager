@@ -20,9 +20,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(homeRouters);
-for (let i in userRoutes) {
-  app.use(userRoutes[i]);
-}
+// console.log(typeof userRoutes);
+// for (let i in userRoutes) {
+//   console.log(i);
+//   app.use(userRoutes[i]);
+// }
+Object.keys(userRoutes).forEach((i) => app.use(userRoutes[i]));
 
 // app.use(taskRoutes.getRoutes);
 // app.use(taskRoutes.getTaskRoutes);
