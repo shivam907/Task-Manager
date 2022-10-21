@@ -5,6 +5,7 @@ const createUsers = async (req, res, next) => {
   try {
     const user = new User(req.body);
     await user.save();
+    const token = await user.generateAuthToken();
     return res.send(user);
   } catch (e) {
     console.log(e);
@@ -66,7 +67,7 @@ const login = async (req, res, next) => {
     // console.log(user.email);
     // await User.findByCredentials(req.body.email, req.body.password)
     const token = await user.generateAuthToken();
-    res.send({ user, token });
+    res.send(user);
   } catch (e) {
     console.log(e);
     res.send("error");

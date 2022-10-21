@@ -41,6 +41,14 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 userSchema.plugin(uniqueValidator, { message: "{PATH} must be unique" });
@@ -48,6 +56,9 @@ userSchema.plugin(uniqueValidator, { message: "{PATH} must be unique" });
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, "cezisbest");
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
+
   return token;
 };
 
