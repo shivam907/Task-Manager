@@ -14,8 +14,8 @@ const createUsers = async (req, res, next) => {
 };
 
 const readUsers = async (req, res, next) => {
-  const users = await User.find({});
-  res.send(users);
+  const user = req.user;
+  res.send(user);
 };
 
 const readUser = async (req, res, next) => {
@@ -52,7 +52,7 @@ const deleteUser = async (req, res, next) => {
 
 const deleteAllUsers = async (req, res, next) => {
   // const user = await User.find({});
-  const del = await User.deleteMany({ name: "shivam" });
+  const del = await User.deleteMany();
 
   res.send(del);
 };
@@ -74,6 +74,13 @@ const login = async (req, res, next) => {
   }
 };
 
+const logOut = async (req, res, next) => {
+  console.log(req.user);
+  req.user.tokens = [];
+  await req.user.save();
+  res.send(req.user);
+};
+
 module.exports = {
   createUsers,
   readUsers,
@@ -82,4 +89,5 @@ module.exports = {
   deleteUser,
   login,
   deleteAllUsers,
+  logOut,
 };

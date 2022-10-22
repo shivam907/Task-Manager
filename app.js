@@ -34,7 +34,11 @@ Object.keys(userRoutes).forEach((i) => app.use(userRoutes[i]));
 mongoose.connect(
   "mongodb+srv://shivam:1234@cluster0.ljlrg2q.mongodb.net/?retryWrites=true&w=majority",
   {
+    // useNewUrlParser: true,
     useNewUrlParser: true,
+    // useCreateIndex: true,
+    // useFindAndModify: false,
+    useUnifiedTopology: true,
     // useCreateIndex: true,
   }
 );

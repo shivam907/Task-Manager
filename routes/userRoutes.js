@@ -1,18 +1,20 @@
 const express = require("express");
 const controller = require("../controllers/userControllers");
+const auth = require("../middleware/auth");
 
 const routers = express.Router();
 
 const createRoutes = routers.post("/users", controller.createUsers);
 
-const readRoutes = routers.get("/users", controller.readUsers);
+const readRoutes = routers.get("/users/me", auth, controller.readUsers);
 const readRoute = routers.get("/users/:id", controller.readUser);
 
 const updateRoute = routers.patch("/users/:id", controller.updateUser);
 
 const deleteRoute = routers.delete("/users/:id", controller.deleteUser);
 
-const loginUser = routers.post("/users/login", controller.login);
+const logInUser = routers.post("/users/login", controller.login);
+const logOut = routers.post("/users/logOut", auth, controller.logOut);
 
 const deleteAllUsers = routers.delete(
   "/users/delete",
@@ -25,5 +27,7 @@ module.exports = {
   readRoute,
   updateRoute,
   deleteRoute,
-  loginUser,
+  logInUser,
+  deleteAllUsers,
+  logOut,
 };
