@@ -18,6 +18,12 @@ const readUsers = async (req, res, next) => {
   res.send(user);
 };
 
+const readAll = async (req, res, next) => {
+  const users = await User.find({});
+  // res.send(users);
+  res.json(users);
+};
+
 const readUser = async (req, res, next) => {
   const _id = req.params.id;
   const users = await User.findById(_id);
@@ -90,4 +96,5 @@ module.exports = {
   login,
   deleteAllUsers,
   logOut,
+  readAll,
 };
